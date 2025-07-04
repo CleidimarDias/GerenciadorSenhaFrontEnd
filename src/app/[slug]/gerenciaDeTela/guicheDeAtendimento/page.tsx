@@ -32,7 +32,7 @@ export default async function GuicheDeAtendimento({ params }: slugProps) {
   const reparticaoId = reparticao.id;
 
   return (
-    <div className="flex flex-col min-h-screen my-8 gap-8    ">
+    <div className="flex flex-col  my-8 gap-8 w-screen   ">
       <div className="flex justify-between text-2xl opacity-60 max-w-screen  px-12  ">
         <p>Guichê de Atendimento</p>
         <p>{slug.toUpperCase()}</p>

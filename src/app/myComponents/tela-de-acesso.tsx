@@ -22,7 +22,7 @@ export default function TelaDeAcesso({
 }: ReparticãoProps) {
   return (
     <div>
-      <Card className="w-xl">
+      <Card className="md:w-xl w-fit">
         <CardHeader className="text-3xl ">
           <CardTitle className="mx-auto">Telas de Acesso</CardTitle>
           <CardDescription className="mx-auto">

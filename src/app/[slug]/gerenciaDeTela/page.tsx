@@ -26,7 +26,7 @@ export default async function GerenciaDeTela({ params }: slugProps) {
 
   return (
     <PrivateRoute>
-      <div className="flex flex-col items-center justify-center w-screen  h-screen ">
+      <div className=" flex justify-center md:w-screen ">
         <TelaDeAcesso reparticaoName={reparticaoName} slug={slug} />
       </div>
     </PrivateRoute>

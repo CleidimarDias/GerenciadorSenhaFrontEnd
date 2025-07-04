@@ -12,7 +12,7 @@ export default async function Recepcao({ params }: slugProps) {
 
   return (
     <PrivateRoute>
-      <div className="max-h-max ">
+      <div className="  w-screen  ">
         <Triagem slug={slug} />
       </div>
     </PrivateRoute>
