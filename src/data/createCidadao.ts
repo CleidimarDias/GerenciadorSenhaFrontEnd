@@ -12,7 +12,7 @@ export const CreateCidadao = async ({
   const res = await fetch(
     // `http://localhost:3001/cidadao/reparticaoId/${reparticaoId}`,
     // `https://gerenciadordesenhabackend.onrender.com/cidadao/reparticaoId/${reparticaoId}`,
-    `${process.env.URL}/cidadao/reparticaoId/${reparticaoId}`,
+    `${process.env.NEXT_PUBLIC_URL}/cidadao/reparticaoId/${reparticaoId}`,
     {
       method: "POST",
       headers: {

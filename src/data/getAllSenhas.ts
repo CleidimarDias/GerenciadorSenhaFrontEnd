@@ -1,7 +1,7 @@
 export const getAllSenhas = async (servicoId: string) => {
   const res = await fetch(
     // `http://localhost:3001/senha/todasAsSenhas/servicoId/${servicoId}`
-    `${process.env.URL}/senha/todasAsSenhas/servicoId/${servicoId}`
+    `${process.env.NEXT_PUBLIC_URL}/senha/todasAsSenhas/servicoId/${servicoId}`
   );
 
   if (!res.ok) {

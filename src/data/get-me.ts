@@ -2,7 +2,7 @@
 export const getMe = async (token: string) => {
   try {
     //const res = await fetch("http://localhost:3001/auth/me"
-    const res = await fetch(`${process.env.URL}/auth/me`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/auth/me`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,

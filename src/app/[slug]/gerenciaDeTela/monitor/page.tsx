@@ -8,7 +8,7 @@ import { io } from "socket.io-client";
 
 //const socket = io("http://localhost:3001");
 // const socket = io("http://192.168.0.12:3001");
-const socket = io(`${process.env.URL}`);
+const socket = io(`${process.env.NEXT_PUBLIC_URL}`);
 
 export default function Monitor() {
   const [senhaChamada, setSenhaChamda] = useState<TypeProximaSenha | null>(
