@@ -1,6 +1,7 @@
 export const getReparticao = async (slug: string) => {
   const res = await fetch(
-    `https://gerenciadordesenhabackend.onrender.com/reparticao/reparticaoSlug/${slug}`
+    `${process.env.URL}/reparticao/reparticaoSlug/${slug}`
+    // `https://gerenciadordesenhabackend.onrender.com/reparticao/reparticaoSlug/${slug}`
     // `http://localhost:3001/reparticao/reparticaoSlug/${slug}`
   );
 
