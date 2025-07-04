@@ -14,6 +14,7 @@ export default function Monitor() {
   const [senhaChamada, setSenhaChamda] = useState<TypeProximaSenha | null>(
     null
   );
+  const [somAtivado, setSomAtivado] = useState(false);
 
   useEffect(() => {
     socket.on("connect", () => {
@@ -31,54 +32,73 @@ export default function Monitor() {
   }, []);
 
   useEffect(() => {
-    const texto = ` ${senhaChamada?.cidadao.name} favor dirija-se ao guichê ${senhaChamada?.guiche.name}`;
-    falarEmVozAlta(texto);
-  }, [senhaChamada]);
+    if (somAtivado && senhaChamada) {
+      const texto = `${senhaChamada.cidadao.name}, favor dirija-se ao guichê ${senhaChamada.guiche.name}`;
+      falarEmVozAlta(texto);
+    }
+  }, [senhaChamada, somAtivado]);
+
+  // useEffect(() => {
+  //   const texto = ` ${senhaChamada?.cidadao.name} favor dirija-se ao guichê ${senhaChamada?.guiche.name}`;
+  //   falarEmVozAlta(texto);
+  // }, [senhaChamada]);
 
   console.log("Senha Chamada no monitor: ", senhaChamada);
 
   return (
-    <div className=" h-full max-h-screen">
-      {senhaChamada?.cidadao.name ? (
-        <div className=" bg-sky-200  my-auto flex flex-col justify-around items-center    ">
-          <p className="text-2xl  text-yellow-500  text-left  w-screen ml-10 mt-10 animate-pulse md:hidden">
+    <div className="h-full max-h-screen">
+      {!somAtivado ? (
+        <div className="flex flex-col items-center justify-center h-screen gap-4 bg-yellow-100">
+          <p className="text-xl font-semibold text-sky-600">
+            Clique no botão abaixo para ativar o som das chamadas.
+          </p>
+          <button
+            onClick={() => setSomAtivado(true)}
+            className="px-6 py-3 text-white bg-blue-500 rounded-lg hover:bg-blue-600"
+          >
+            Ativar Som
+          </button>
+        </div>
+      ) : senhaChamada?.cidadao.name ? (
+        <div className="bg-sky-200 my-auto flex flex-col justify-around items-center">
+          <p className="text-2xl text-yellow-500 text-left w-screen ml-10 mt-10 animate-pulse md:hidden">
             Chamando...
           </p>
-          <div className="   flex flex-col justify-between items-center md:gap-20 gap-10 flex-1 my-20   rounded-2xl   text-center  shadow-2xl  shadow-[#1270b7] py-8 px-1 md:shadow-none  ">
-            <p className="md:text-6xl text-4xl font-semibold max-h-screen  text-slate-500 ">
-              {senhaChamada?.cidadao.prioridade ? "Prioridade" : "Covencional"}
+          <div className="flex flex-col justify-between items-center md:gap-20 gap-10 flex-1 my-20 rounded-2xl text-center shadow-2xl shadow-[#1270b7] py-8 px-1 md:shadow-none">
+            <p className="md:text-6xl text-4xl font-semibold max-h-screen text-slate-500">
+              {senhaChamada.cidadao.prioridade ? "Prioridade" : "Convencional"}
             </p>
 
-            <div className=" ">
-              <p className="md:text-5xl text-2xl  font-medium text-slate-500 ">
+            <div>
+              <p className="md:text-5xl text-2xl font-medium text-slate-500">
                 Cidadão
               </p>
-              <p className="md:text-8xl text-4xl font-semibold text-sky-700 ">
-                {senhaChamada?.cidadao.name}
+              <p className="md:text-8xl text-4xl font-semibold text-sky-700">
+                {senhaChamada.cidadao.name}
               </p>
             </div>
-            <div className="">
-              <p className="md:text-6xl text-2xl font-medium text-slate-500 ">
+            <div>
+              <p className="md:text-6xl text-2xl font-medium text-slate-500">
                 Serviço
               </p>
               <p className="md:text-8xl text-4xl font-semibold text-sky-700">
-                {senhaChamada?.servico.name}
+                {senhaChamada.servico.name}
               </p>
             </div>
-            <div className="">
-              <p className="md:text-6xl text-2xl font-medium text-slate-500 ">
+            <div>
+              <p className="md:text-6xl text-2xl font-medium text-slate-500">
                 Guichê
               </p>
               <p className="md:text-8xl text-4xl font-semibold text-sky-700">
-                {senhaChamada?.guiche.name}
+                {senhaChamada.guiche.name}
               </p>
             </div>
           </div>
         </div>
       ) : (
-        <div className="flex flex-col h-full my-auto justify-center items-center gap-4  ">
+        <div className="flex flex-col h-full my-auto justify-center items-center gap-4">
           <p className="text-2xl font-semibold opacity-40">
-            Gernciador de Senhas{" "}
+            Gerenciador de Senhas
           </p>
           <Image src="/ampulleta.png" alt="" height={200} width={200} />
           <p className="text-2xl font-semibold opacity-40 text-center">
