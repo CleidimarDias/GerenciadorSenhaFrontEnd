@@ -64,7 +64,7 @@ export function FormularioCidadaoGerarSenha({
       console.log("Cidadão criado com sucesso:", cidadao.name);
       console.log("ServiçoId: ", servicoId);
       const res = await fetch(
-        `http://localhost:3001/senha/servicoId/${servicoId}/cidadaoId/${cidadao.id}`,
+        `${process.env.NEXT_PUBLIC_URL}/senha/servicoId/${servicoId}/cidadaoId/${cidadao.id}`,
         {
           method: "POST",
           headers: {
