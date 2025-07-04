@@ -10,7 +10,7 @@ export default function Header() {
         width={180}
         className=" "
       />
-      <h3 className="text-white text-3xl font-semibold mr-10 hidden md:block  ">
+      <h3 className=" text-3xl  text-green-500 font-semibold mr-10 hidden md:block  ">
         Gerênciador de Senhass
       </h3>
     </div>

@@ -31,14 +31,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen overflow-hidden bg-[#ebeff5]`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased h-screen  bg-[#ebeff5]`}
       >
         <AuthProvider>
           <GuicheProvider>
             <TotalSenhasProvider>
               <div className="flex flex-col min-h-screen max-h-screen overflow-hidden">
                 <Header />
-                <main className="flex-grow overflow-hidden flex items-center justify-center">
+                <main className="flex-grow  flex items-center justify-center">
                   <div className="w-full h-full scale-95  mb-8">{children}</div>
                 </main>
               </div>
