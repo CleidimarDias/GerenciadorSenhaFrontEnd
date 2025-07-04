@@ -7,7 +7,8 @@ import React, { useEffect, useState } from "react";
 import { io } from "socket.io-client";
 
 //const socket = io("http://localhost:3001");
-const socket = io("http://192.168.0.12:3001");
+// const socket = io("http://192.168.0.12:3001");
+const socket = io(`${process.env.URL}`);
 
 export default function Monitor() {
   const [senhaChamada, setSenhaChamda] = useState<TypeProximaSenha | null>(

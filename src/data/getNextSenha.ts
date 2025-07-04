@@ -12,7 +12,8 @@ export const GetNextSenha = async ({
   userId,
 }: dadosProps) => {
   const res = await fetch(
-    `http://localhost:3001/senha/chamarProximaSenha/reparticaoId/${reparticaoId}/servicoId/${servicoId}/guicheId/${guicheId}/usuarioId/${userId}`
+    //`http://localhost:3001/senha/chamarProximaSenha/reparticaoId/${reparticaoId}/servicoId/${servicoId}/guicheId/${guicheId}/usuarioId/${userId}`
+    `${process.env.URL}/senha/chamarProximaSenha/reparticaoId/${reparticaoId}/servicoId/${servicoId}/guicheId/${guicheId}/usuarioId/${userId}`
   );
 
   if (!res.ok) {

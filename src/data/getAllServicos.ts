@@ -1,6 +1,7 @@
 export const getAllServicos = async (reparticaoId: string) => {
   const res = await fetch(
-    `http://localhost:3001/reparticao/reparticaoId/${reparticaoId}/allServicos`
+    // `http://localhost:3001/reparticao/reparticaoId/${reparticaoId}/allServicos`
+    `${process.env.URL}/reparticao/reparticaoId/${reparticaoId}/allServicos`
   );
 
   if (!res.ok) {

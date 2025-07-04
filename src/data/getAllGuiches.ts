@@ -1,6 +1,7 @@
 export const getAllGuiches = async (reparticaoId: string) => {
   const res = await fetch(
-    `http://localhost:3001/guiche/reparticaoId/${reparticaoId}`
+    // `http://localhost:3001/guiche/reparticaoId/${reparticaoId}`
+    `${process.env.URL}guiche/reparticaoId/${reparticaoId}`
   );
 
   if (!res.ok) {

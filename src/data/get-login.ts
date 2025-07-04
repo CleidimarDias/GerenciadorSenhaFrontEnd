@@ -17,7 +17,7 @@ export const getLogin = async (
   values: IValuesLogin
 ): Promise<dataProps | null> => {
   try {
-    const res = await fetch("http://localhost:3001/login", {
+    const res = await fetch(`${process.env.URL}/login`, {
       method: "POST",
       headers: {
         "Content-type": "application/json",
