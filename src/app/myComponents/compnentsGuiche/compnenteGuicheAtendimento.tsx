@@ -68,7 +68,7 @@ export default function ComponenteGuicheAtendimento({
   return (
     <div className="flex  flex-col  gap-20 items-center ">
       <CardEscolhaGuiche frameworks={frameworks} />
-      <div className="grid grid-cols-4 gap-12  mx-auto my-auto items-center">
+      <div className="md:grid md:grid-cols-4 gap-12  mx-auto my-auto items-center flex flex-col">
         {allServicos?.map((servico) => (
           <CardProximaSenha
             key={servico.id}

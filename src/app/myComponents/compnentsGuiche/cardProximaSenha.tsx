@@ -4,7 +4,7 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
+  // CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -159,7 +159,7 @@ export default function CardProximaSenha({
   );
 
   return (
-    <Card className="w-[280px] shadow-[#1270b7] mx-auto gap-10">
+    <Card className="w-[280px] shadow-[#1270b7] mx-auto gap-10 ">
       <CardHeader className="">
         <CardTitle className="text-center text-xl">{servicoName}</CardTitle>
         <CardDescription>
@@ -177,10 +177,10 @@ export default function CardProximaSenha({
           Chamar Próxima Senha
         </Button>
       </CardContent>
-      <CardFooter className="flex justify-between">
+      {/* <CardFooter className="flex justify-between">
         <Button className="bg-[#28945e]">Finalizar</Button>
         <Button variant="destructive">Cancelar</Button>
-      </CardFooter>
+      </CardFooter> */}
     </Card>
   );
 }
