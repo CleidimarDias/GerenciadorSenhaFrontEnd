@@ -18,6 +18,8 @@ import {
 import { Toaster } from "@/components/ui/sonner";
 import { FormularioCidadaoGerarSenha } from "./formularioCidadaoGerarSenha";
 import { getAllSenhas } from "@/data/getAllSenhas";
+import { SquareChartGantt } from "lucide-react";
+import Link from "next/link";
 
 interface TriagemProps {
   slug: string;
@@ -93,13 +95,25 @@ export default function Triagem({ slug }: TriagemProps) {
 
   if (!reparticao) return <p>Carregando...</p>;
   return (
-    <div className="   md:h-[calc(100vh-6.25rem)] md:flex md:flex-col  md:justify-center ">
-      <div className="flex justify-around p-10 text-3xl text-gray-800 font-semibold">
-        <h3>Triagem</h3>
-        <h3>{slug.toUpperCase()}</h3>
+    <div className="   md:h-[calc(100vh-6.25rem)] md:flex md:flex-col  md:justify-around ">
+      <div className="flex justify-between md:justify-around p-10  md:text-3xl  font-light   bg-white  border-white mb-6 md:mb-0">
+        <h3 className="text-[#1270b7]">{slug.toUpperCase()}</h3>
+        <h3 className="text-[#1270b7] hidden md:block">Triagem</h3>
+
+        <Link
+          href={`/${slug}/gerenciaDeTela`}
+          className="flex gap-4 items-center "
+        >
+          <SquareChartGantt
+            size={30}
+            strokeWidth={1}
+            className="text-[#1270b7]  "
+          />
+          <p className="text-[#1270b7]"> Ir para Telas de Acesso</p>
+        </Link>
       </div>
 
-      <div className=" flex md:w-screen items-center justify-center  mx-4 mb-8 rounded-2xl  ">
+      <div className=" flex items-center justify-center  mx-4 mb-8 rounded-2xl  flex-1 ">
         <div className="md:grid md:grid-cols-4 gap-10 w-full mx-8 flex flex-col">
           {quantidadeDeSenhasPorServico.map((servico) => (
             <div key={servico.id} className="h-full w-full">
