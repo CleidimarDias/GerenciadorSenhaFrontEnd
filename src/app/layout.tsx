@@ -31,7 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased   bg-[#ebeff5]`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased   bg-[#ebeff5] overflow-x-hidden `}
       >
         <AuthProvider>
           <GuicheProvider>
@@ -39,8 +39,8 @@ export default function RootLayout({
               <div className=" ">
                 <Header />
                 {/* h-[calc(100vh-6.25rem)] */}
-                <main className=" flex justify-center items-center my-auto  ">
-                  <div className="  scale-95 ">{children}</div>
+                <main className=" flex justify-center items-center my-auto overflow-x-hidden   ">
+                  <div className="   ">{children}</div>
                 </main>
               </div>
             </TotalSenhasProvider>

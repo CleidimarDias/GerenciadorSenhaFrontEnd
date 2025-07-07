@@ -6,12 +6,12 @@ export default function Header() {
       <Image
         src="/logo-prefeitura.png"
         alt="logo"
-        height={100}
-        width={180}
+        height={110}
+        width={200}
         className=" "
       />
-      <h3 className=" text-3xl  text-green-500 font-semibold mr-10 hidden md:block  ">
-        Gerênciador de Senhass
+      <h3 className=" text-3xl  text-white font-semibold mr-10 hidden md:block  ">
+        Gerênciador de Senhas
       </h3>
     </div>
   );

@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { setCookie } from "cookies-next";
 // import { cookies } from "next/headers";
+import { Skeleton } from "@/components/ui/skeleton";
 
 import {
   Form,
@@ -27,6 +28,7 @@ import { getLogin } from "@/data/get-login";
 
 import { useUser } from "@/app/contexts/AuthContext";
 import { redirect } from "next/navigation";
+import { useState } from "react";
 
 interface slugProps {
   slug: string;
@@ -50,6 +52,7 @@ const formSchema = z.object({
 export default function FormularioLogin({ slug }: slugProps) {
   //const [isLogged, setIsLogged] = useState(false)
   const { setUser, user } = useUser();
+  const [showSkeleton, setShowSkeleton] = useState(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -60,6 +63,7 @@ export default function FormularioLogin({ slug }: slugProps) {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    setShowSkeleton(true);
     const result = await getLogin(values);
 
     if (result) {
@@ -68,6 +72,7 @@ export default function FormularioLogin({ slug }: slugProps) {
       setUser(result);
 
       redirect(`/${slug}/gerenciaDeTela`);
+      setShowSkeleton(false);
 
       // console.log(result.token);
     } else {
@@ -83,7 +88,8 @@ export default function FormularioLogin({ slug }: slugProps) {
   // };
 
   return (
-    <Card className=" text-[#1270b7] border-[#1270b7] w-2/5">
+    // #1270b7
+    <Card className=" text-[#1270b7]    w-80 md:w-xl md:flex md:flex-col md:justify-center rounded-none h-4/5 md:h-full pt-20 ">
       <CardHeader>
         <CardTitle className="text-[#1270b7] text-3xl">LOGIN</CardTitle>
         <CardDescription className="text-[#1270b7]">
@@ -120,9 +126,13 @@ export default function FormularioLogin({ slug }: slugProps) {
                 </FormItem>
               )}
             />
-            <Button className="bg-[#1270b7] w-full text-2xl h-fit">
-              Enviar
-            </Button>
+            {!showSkeleton ? (
+              <Button className="bg-[#1270b7] hover:bg-blue-600 w-full text-2xl h-fit">
+                Enviar
+              </Button>
+            ) : (
+              <Skeleton className="w-full bg-[#1270b7] h-[50px]" />
+            )}
           </form>
         </Form>
       </CardContent>
