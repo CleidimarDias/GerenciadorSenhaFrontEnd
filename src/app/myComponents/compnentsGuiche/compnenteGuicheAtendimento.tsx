@@ -9,6 +9,8 @@ import CardEscolhaGuiche from "./cardEscolhaGuiche";
 import { getAllServicos } from "@/data/getAllServicos";
 import { useUser } from "@/app/contexts/AuthContext";
 import CardProximaSenha from "./cardProximaSenha";
+import { Card, CardContent } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 
 //import CardProximaSenha from "./cardProximaSenha";
 
@@ -66,19 +68,24 @@ export default function ComponenteGuicheAtendimento({
   // [x] ReparticaoId
 
   return (
-    <div className="flex  flex-col  gap-20 items-center ">
+    <div className="flex  flex-col  gap-10 items-center justify-center  mt-5 ">
       <CardEscolhaGuiche frameworks={frameworks} />
-      <div className="md:grid md:grid-cols-4 gap-12  mx-auto my-auto items-center flex flex-col">
-        {allServicos?.map((servico) => (
-          <CardProximaSenha
-            key={servico.id}
-            servicoName={servico.name}
-            servicoId={servico.id}
-            reparticaoId={reparticaoId}
-            userId={user ? user?.UserLogin.id : ""}
-          />
-        ))}
-      </div>
+      <Separator orientation="horizontal" />
+      <Card>
+        <CardContent>
+          <div className="md:grid md:grid-cols-2 lg:grid-cols-4 gap-12  mx-auto my-auto items-center flex flex-col">
+            {allServicos?.map((servico) => (
+              <CardProximaSenha
+                key={servico.id}
+                servicoName={servico.name}
+                servicoId={servico.id}
+                reparticaoId={reparticaoId}
+                userId={user ? user?.UserLogin.id : ""}
+              />
+            ))}
+          </div>
+        </CardContent>
+      </Card>
     </div>
   );
 }

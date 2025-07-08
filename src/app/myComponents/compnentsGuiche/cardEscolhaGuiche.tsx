@@ -69,101 +69,108 @@ export default function CardEscolhaGuiche({
   console.log("Guiche Selecionado: ", guicheSelecionado?.label);
 
   return (
-    <div className="flex flex-col md:flex-row md:justify-around w-full  items-center justify-center my-8">
-      <Card className=" w-[280px] shadow-[#1270b7]">
-        <CardHeader>
-          <CardTitle>Guichê</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-              <FormField
-                control={form.control}
-                name="guiche"
-                render={({ field }) => (
-                  <FormItem className="flex flex-col">
-                    {/* <FormLabel>Guichês</FormLabel> */}
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <FormControl>
-                          <Button
-                            variant="outline"
-                            role="combobox"
-                            className={cn(
-                              "w-[200px] justify-between",
-                              !field.value && "text-muted-foreground"
-                            )}
-                          >
-                            {field.value && frameworks
-                              ? frameworks.find(
-                                  (guiche) => guiche.value === field.value
-                                )?.label
-                              : "Selecione o Guichê"}
-                            <ChevronsUpDown className="opacity-50" />
-                          </Button>
-                        </FormControl>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-[200px] p-0">
-                        <Command>
-                          <CommandInput
-                            placeholder="Search framework..."
-                            className="h-9"
-                          />
-                          <CommandList>
-                            <CommandEmpty>
-                              Nenhum guichê encontrado.
-                            </CommandEmpty>
-                            <CommandGroup>
-                              {frameworks &&
-                                frameworks.map((guiche) => (
-                                  <CommandItem
-                                    value={guiche.label}
-                                    key={guiche.value}
-                                    onSelect={() => {
-                                      form.setValue("guiche", guiche.value);
-                                    }}
-                                  >
-                                    {guiche.label}
-                                    <Check
-                                      className={cn(
-                                        "ml-auto",
-                                        guiche.value === field.value
-                                          ? "opacity-100"
-                                          : "opacity-0"
-                                      )}
-                                    />
-                                  </CommandItem>
-                                ))}
-                            </CommandGroup>
-                          </CommandList>
-                        </Command>
-                      </PopoverContent>
-                    </Popover>
-                    <FormDescription className="mt-4">
-                      Este é o número do guichê que será usado para o
-                      atendimento.
-                    </FormDescription>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              />
-              <Button
-                type="submit"
-                variant="outline"
-                className="w-full boder-2  bg-[#1270b7] text-white hover:bg-blue-600 hover:text-white text-xl "
-              >
-                <p className="p-4 m-4">Selecionar</p>
-              </Button>
-            </form>
-          </Form>
-        </CardContent>
-      </Card>
-      <div className=" w-[100px] h-[100px] md:w-[280px] md:h-[280px] bg-[#1270b7]/90 text-accent rounded-full flex flex-col  justify-center items-center    m-2">
-        <p className="text-xl">Guichê</p>
-        <p className="text-3xl md:text-9xl ">
-          {guicheSelecionado ? guicheSelecionado.label : "?"}
-        </p>
-      </div>
-    </div>
+    <Card className="">
+      <CardContent className=" ">
+        <div className="-blue-500 h-full flex flex-col-reverse gap-5  md:flex-row md:justify-around w-full  items-center justify-center my-8">
+          <Card className=" w-[280px] shadow-[#1270b7]">
+            <CardHeader>
+              <CardTitle>Guichê</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <Form {...form}>
+                <form
+                  onSubmit={form.handleSubmit(onSubmit)}
+                  className="space-y-6"
+                >
+                  <FormField
+                    control={form.control}
+                    name="guiche"
+                    render={({ field }) => (
+                      <FormItem className="flex flex-col">
+                        {/* <FormLabel>Guichês</FormLabel> */}
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <FormControl>
+                              <Button
+                                variant="outline"
+                                role="combobox"
+                                className={cn(
+                                  "w-[200px] justify-between",
+                                  !field.value && "text-muted-foreground"
+                                )}
+                              >
+                                {field.value && frameworks
+                                  ? frameworks.find(
+                                      (guiche) => guiche.value === field.value
+                                    )?.label
+                                  : "Selecione o Guichê"}
+                                <ChevronsUpDown className="opacity-50" />
+                              </Button>
+                            </FormControl>
+                          </PopoverTrigger>
+                          <PopoverContent className="w-[200px] p-0">
+                            <Command>
+                              <CommandInput
+                                placeholder="Search framework..."
+                                className="h-9"
+                              />
+                              <CommandList>
+                                <CommandEmpty>
+                                  Nenhum guichê encontrado.
+                                </CommandEmpty>
+                                <CommandGroup>
+                                  {frameworks &&
+                                    frameworks.map((guiche) => (
+                                      <CommandItem
+                                        value={guiche.label}
+                                        key={guiche.value}
+                                        onSelect={() => {
+                                          form.setValue("guiche", guiche.value);
+                                        }}
+                                      >
+                                        {guiche.label}
+                                        <Check
+                                          className={cn(
+                                            "ml-auto",
+                                            guiche.value === field.value
+                                              ? "opacity-100"
+                                              : "opacity-0"
+                                          )}
+                                        />
+                                      </CommandItem>
+                                    ))}
+                                </CommandGroup>
+                              </CommandList>
+                            </Command>
+                          </PopoverContent>
+                        </Popover>
+                        <FormDescription className="mt-4">
+                          Este é o número do guichê que será usado para o
+                          atendimento.
+                        </FormDescription>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <Button
+                    type="submit"
+                    variant="outline"
+                    className="w-full boder-2  bg-[#1270b7] text-white hover:bg-blue-600 hover:text-white text-xl "
+                  >
+                    <p className="p-4 m-4">Selecionar</p>
+                  </Button>
+                </form>
+              </Form>
+            </CardContent>
+          </Card>
+          <div className=" w-[100px] h-[100px] md:w-[280px] md:h-[280px] bg-[#1270b7]/90 text-accent rounded-full flex flex-col  justify-center items-center    m-2">
+            <p className="text-xl">Guichê</p>
+            <p className="text-3xl md:text-9xl ">
+              {guicheSelecionado ? guicheSelecionado.label : "?"}
+            </p>
+          </div>
+        </div>
+      </CardContent>
+    </Card>
   );
 }

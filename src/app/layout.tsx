@@ -31,18 +31,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased   bg-[#ebeff5] overflow-x-hidden `}
+        className={`${geistSans.variable} ${geistMono.variable} max-w-screen antialiased box-border  bg-[#ebeff5] overflow-x-hidden `}
       >
         <AuthProvider>
           <GuicheProvider>
             <TotalSenhasProvider>
-              <div className=" ">
+              <div className=" sticky top-0 ">
                 <Header />
-                {/* h-[calc(100vh-6.25rem)] */}
-                <main className=" flex justify-center items-center my-auto overflow-x-hidden   ">
-                  <div className="   ">{children}</div>
-                </main>
               </div>
+              {/* h-[calc(100vh-6.25rem)] */}
+              <main className=" flex justify-center items-center my-auto box-border   ">
+                <div className="   ">{children}</div>
+              </main>
             </TotalSenhasProvider>
           </GuicheProvider>
         </AuthProvider>
