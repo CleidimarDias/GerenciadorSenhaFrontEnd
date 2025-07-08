@@ -16,6 +16,23 @@ export default function Monitor() {
   );
   const [somAtivado, setSomAtivado] = useState(false);
 
+  const [ultimasChamadas, setUltimasChamadas] = useState<string[]>([]);
+
+  const testeArray = [];
+  testeArray.unshift(1);
+  testeArray.unshift(2);
+  testeArray.unshift(3);
+  testeArray.unshift(4);
+  testeArray.unshift(5);
+
+  console.log("teste array antes do shift: ", testeArray);
+
+  while (testeArray.length > 3) {
+    testeArray.pop();
+  }
+
+  console.log("teste array: ", testeArray);
+
   useEffect(() => {
     socket.on("connect", () => {
       console.log("Conectado ao websocket");
@@ -29,10 +46,12 @@ export default function Monitor() {
     return () => {
       socket.off("senha chamada");
     };
-  }, []);
+  });
 
   useEffect(() => {
     if (somAtivado && senhaChamada) {
+      setUltimasChamadas((prev) => [...prev, senhaChamada.cidadao.name]);
+
       const texto = `${senhaChamada.cidadao.name}, favor dirija-se ao guichê ${senhaChamada.guiche.name}`;
       falarEmVozAlta(texto);
     }
@@ -43,21 +62,20 @@ export default function Monitor() {
   //   falarEmVozAlta(texto);
   // }, [senhaChamada]);
 
-  console.log("Senha Chamada no monitor: ", senhaChamada);
+  console.log("array de senha ultimas Chamadas: ", ultimasChamadas);
 
   return (
-    <div className="h-full max-h-screen">
+    <div className="h-full w-screen">
       {!somAtivado ? (
-        <div className="flex flex-col items-center justify-center h-screen gap-4 bg-yellow-100">
-          <p className="text-xl font-semibold text-sky-600">
-            Clique no botão abaixo para ativar o som das chamadas.
-          </p>
+        <div className="flex flex-col items-center mt-5 h-screen gap-4 bg-yellow-100">
           <button
             onClick={() => setSomAtivado(true)}
             className="px-6 py-3 text-white bg-blue-500 rounded-lg hover:bg-blue-600"
           >
             Ativar Som
           </button>
+
+          <div></div>
         </div>
       ) : senhaChamada?.cidadao.name ? (
         <div className="bg-sky-200 my-auto flex flex-col justify-around items-center">

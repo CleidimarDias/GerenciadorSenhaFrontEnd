@@ -74,6 +74,8 @@ export default function CardProximaSenha({
     setQuantidadeDeSenhasDeSenhasPendentePorServico,
   ] = useState<QuantidadePorServico[]>([]);
 
+  const [ultimasChamadas, setUltimasChamadas] = useState<string[]>([]);
+
   useEffect(() => {
     const getServicos = async () => {
       const resp = await getAllServicos(reparticaoId);
@@ -131,6 +133,8 @@ export default function CardProximaSenha({
   // );
   // console.log("pedding Senhas vindo do card Proxima senha: ", peddingSenhas);
 
+  // eslint-disable-next-line prefer-const
+
   const guicheId = guiche?.id as string;
   const handleNextSenha = async () => {
     const res = await GetNextSenha({
@@ -145,9 +149,16 @@ export default function CardProximaSenha({
     }
 
     atualizaTotalSenha();
+    console.log("nome do cidadao: ", res.cidadao.name);
+    setUltimasChamadas((prev) => [...prev, res.cidadao.name]);
+
     return res;
   };
 
+  console.log(
+    "Array ultimasChamadas vindo da pagina cadProximaSenha: ",
+    ultimasChamadas
+  );
   console.log(
     quantidadeDeSenhasPendentePorServico.map(
       (quantidade) => quantidade.quantidade
@@ -170,6 +181,7 @@ export default function CardProximaSenha({
         </CardDescription>
       </CardHeader>
       <CardContent className=" ">
+        {ultimasChamadas && ultimasChamadas.map((chamada) => chamada)}
         <Button
           onClick={handleNextSenha}
           className="bg-[#1270b7] w-full text-xl p-6"
