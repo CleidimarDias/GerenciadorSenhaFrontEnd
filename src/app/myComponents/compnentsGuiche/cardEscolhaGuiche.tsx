@@ -72,9 +72,9 @@ export default function CardEscolhaGuiche({
     <Card className="">
       <CardContent className=" ">
         <div className="-blue-500 h-full flex flex-col-reverse gap-5  md:flex-row md:justify-around w-full  items-center justify-center my-8">
-          <Card className=" w-[280px] shadow-[#1270b7]">
+          <Card className=" w-[280px] text-slate-600">
             <CardHeader>
-              <CardTitle>Guichê</CardTitle>
+              <CardTitle>Selecione o Local </CardTitle>
             </CardHeader>
             <CardContent>
               <Form {...form}>
@@ -116,7 +116,7 @@ export default function CardEscolhaGuiche({
                               />
                               <CommandList>
                                 <CommandEmpty>
-                                  Nenhum guichê encontrado.
+                                  Nenhum local encontrado.
                                 </CommandEmpty>
                                 <CommandGroup>
                                   {frameworks &&
@@ -145,8 +145,7 @@ export default function CardEscolhaGuiche({
                           </PopoverContent>
                         </Popover>
                         <FormDescription className="mt-4">
-                          Este é o número do guichê que será usado para o
-                          atendimento.
+                          Este local será utilizado para os atendimentos.
                         </FormDescription>
                         <FormMessage />
                       </FormItem>
@@ -163,9 +162,9 @@ export default function CardEscolhaGuiche({
               </Form>
             </CardContent>
           </Card>
-          <div className=" w-[100px] h-[100px] md:w-[280px] md:h-[280px] bg-[#1270b7]/90 text-accent rounded-full flex flex-col  justify-center items-center    m-2">
-            <p className="text-xl">Guichê</p>
-            <p className="text-3xl md:text-9xl ">
+          <div className=" w-full  text-slate-600 border-y  md:border-none  flex flex-col  justify-center items-center gap-4 m-2">
+            <p className="md:text-xl ">Local Selecionado</p>
+            <p className="text-3xl md:text-4xl ">
               {guicheSelecionado ? guicheSelecionado.label : "?"}
             </p>
           </div>

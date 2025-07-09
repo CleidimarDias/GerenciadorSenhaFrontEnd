@@ -170,7 +170,7 @@ export default function CardProximaSenha({
   );
 
   return (
-    <Card className="w-[280px] shadow-[#1270b7] mx-auto gap-10 ">
+    <Card className="w-[280px]  mx-auto gap-10 ">
       <CardHeader className="">
         <CardTitle className="text-center text-xl">{servicoName}</CardTitle>
         <CardDescription>
@@ -181,10 +181,9 @@ export default function CardProximaSenha({
         </CardDescription>
       </CardHeader>
       <CardContent className=" ">
-        {ultimasChamadas && ultimasChamadas.map((chamada) => chamada)}
         <Button
           onClick={handleNextSenha}
-          className="bg-[#1270b7] w-full text-xl p-6"
+          className="bg-[#1270b7] hover:bg-blue-700 w-full text-xl p-6"
         >
           Chamar Próxima Senha
         </Button>
