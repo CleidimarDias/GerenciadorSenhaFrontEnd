@@ -59,15 +59,18 @@ export default function Monitor() {
 
       setObjetoDeSenhaChamada((prev) => {
         const novoArray = [
-          ...prev,
-          { name: nome, guiche: guiche, prioridade: prioridade },
+
+          { name: nome, guiche: guiche, prioridade: prioridade }, ...prev,
         ];
-        return novoArray.slice(-3).reverse(); // mantém só os 3 ultimos
+        return novoArray.slice(0, 3); // mantém só os 3 ultimos
+        //return novoArray;
       });
     }
   }, [senhaChamada]);
 
-  console.log("Objeto de senha chamada: ", objetoDeSenhaChamada);
+
+
+  console.log("Objeto de senha chamada na page monitor", objetoDeSenhaChamada);
 
   // useEffect(() => {
   //   const texto = ` ${senhaChamada?.cidadao.name} favor dirija-se ao guichê ${senhaChamada?.guiche.name}`;

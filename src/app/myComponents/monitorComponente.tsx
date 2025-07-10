@@ -1,8 +1,8 @@
 "use client";
 
 import { Separator } from "@/components/ui/separator";
+import Image from "next/image";
 //import { Button } from "@/components/ui/button";
-import React from "react";
 
 interface Props {
   ultimasChamadas: { name: string; guiche: string; prioridade: boolean }[];
@@ -10,6 +10,10 @@ interface Props {
 export default function MonitorComponente({ ultimasChamadas }: Props) {
   console.log(ultimasChamadas);
   //console.log(ultimasChamadas[0]);
+
+
+
+
   return (
     <div className=" flex flex-col h-full  items-center justify-center  w-full  ">
       {ultimasChamadas[0] ? <div className=" h-full    flex flex-col ">
@@ -44,9 +48,9 @@ export default function MonitorComponente({ ultimasChamadas }: Props) {
             <p><span className="font-semibold">Local de Atendimento: </span> {ultimasChamadas[1].guiche}</p>
             <p><span className="font-semibold">Atendimento: </span>{ultimasChamadas[1].prioridade ? "Prioridade" : "Convencional"}</p>
 
-          </div> : <p>Não Consta</p>}
+          </div> : <p className="text-2xl mt-18  ">Aguardando...</p>}
 
-          <Separator orientation="horizontal" />
+          <Separator orientation="horizontal" className="bg-gray-300" />
 
           {ultimasChamadas[2] ? <div className="px-2">
             <p><span className="font-semibold">Nome: </span> {ultimasChamadas[2].name}</p>
@@ -74,14 +78,19 @@ export default function MonitorComponente({ ultimasChamadas }: Props) {
           <div className="flex flex-col items-center">
             <p className="text-2xl  mb-2 font-semibold">Atendimento</p>
             <p className="text-2xl">{ultimasChamadas[1] ? (ultimasChamadas[1].prioridade ? "Prioritário" : "Convencional") : "xxxxxxx"}</p>
-            <p className="text-2xl">{ultimasChamadas[2] ? (ultimasChamadas[2].prioridade ? <p>Prioritário</p> : <p>Convencional</p>) : "xxxxxxx"}</p>
+            <p className="text-2xl">{ultimasChamadas[2] ? (ultimasChamadas[2].prioridade ? "Prioritário" : "Convencional") : "xxxxxxx"}</p>
           </div>
 
 
         </div>
 
 
-      </div> : <div className="h-full bg-red-500">Não temos</div>}
+      </div> : <div className="h-full w-screen flex flex-col items-center mt-10 gap-10 ">
+        <p className="text-xl lg:text-3xl font-semibold text-slate-600 p-2">
+          Aguardando Novas Chamadas...
+        </p>
+        <Image src="/ampulleta.png" alt="Ampulleta" height={200} width={200} className="opacity-70" />
+      </div>}
 
 
     </div>
