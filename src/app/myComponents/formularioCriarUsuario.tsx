@@ -9,7 +9,7 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { CreateUsuario } from '@/data/createUsuario'
 import { getReparticao } from '@/data/get-reparticao'
-import { withMask } from 'use-mask-input';
+
 
 
 
@@ -107,7 +107,7 @@ export default function FormularioCriarUsuario({ slug }: PainelProps) {
                                 <FormItem>
                                     <FormLabel>CPF</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="CPF..." {...field} ref={withMask('999.999.999-99')} />
+                                        <Input placeholder="CPF..." {...field} />
                                     </FormControl>
                                     <FormDescription>
                                         Ex: 000.000.000-00

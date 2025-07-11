@@ -18,7 +18,7 @@ import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { CreateCidadao } from "@/data/createCidadao";
 import { cidadaoProps } from "@/types/typesCidadao";
-import { withMask } from 'use-mask-input';
+
 
 import { toast } from "sonner";
 
@@ -128,7 +128,7 @@ export function FormularioCidadaoGerarSenha({
             <FormItem>
               <FormLabel>CPF</FormLabel>
               <FormControl>
-                <Input placeholder="CPF" {...field} ref={withMask('999.999.999-99')} />
+                <Input placeholder="CPF" {...field} />
               </FormControl>
               <FormDescription>Digite os números do cpf</FormDescription>
               <FormMessage />
