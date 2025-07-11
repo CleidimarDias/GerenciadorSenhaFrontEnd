@@ -133,7 +133,7 @@ export default function CardProximaSenha({
   // );
   // console.log("pedding Senhas vindo do card Proxima senha: ", peddingSenhas);
 
-  // eslint-disable-next-line prefer-const
+
 
   const guicheId = guiche?.id as string;
   const handleNextSenha = async () => {

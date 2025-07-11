@@ -29,6 +29,7 @@ import { getLogin } from "@/data/get-login";
 import { useUser } from "@/app/contexts/AuthContext";
 import { redirect } from "next/navigation";
 import { useState } from "react";
+import { withMask } from 'use-mask-input';
 
 interface slugProps {
   slug: string;
@@ -106,7 +107,7 @@ export default function FormularioLogin({ slug }: slugProps) {
                 <FormItem className="text-2xl">
                   <FormLabel className="text-xl">cpf</FormLabel>
                   <FormControl>
-                    <Input placeholder="Digite seu cpf..." {...field} />
+                    <Input placeholder="Digite seu cpf..." {...field} ref={withMask('999.999.999-99')} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>

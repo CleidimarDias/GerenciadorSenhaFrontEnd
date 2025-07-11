@@ -43,7 +43,7 @@ export default function TelaDeAcesso({
           </Button>
           <Button className="bg-[#1270b7]  hover:bg-blue-700 p-6 text-xl rounded-none">
             {" "}
-            Painel Administrativo
+            <Link href={`/${slug}/gerenciaDeTela/painelAdministrativo`}>Painel Administrativo </Link>
           </Button>
         </CardContent>
         <CardFooter className="text-2xl font-semibold  opacity-60 ">
