@@ -16,6 +16,8 @@ import { GetNextSenha } from "@/data/getNextSenha";
 import { getAllServicos } from "@/data/getAllServicos";
 import { getPeendingSenhas } from "@/data/getAllPeendingSenhas";
 import { UsetotalSenhas } from "@/app/contexts/totalSenhasContext";
+import toast, { Toaster } from "react-hot-toast";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface CardProxmaSenhaProps {
   servicoName: string;
@@ -55,19 +57,12 @@ export default function CardProximaSenha({
   const { guiche } = useGuiche();
   const { settotalSenhas } = UsetotalSenhas();
 
-  // const data: string[] = [
-  //   servicoId,
-  //   userId,
-  //   reparticaoId,
-  //   guiche?.id as string,
-  // ];
+
 
   const [servicosData, setServicosData] = useState<ServicosProps[] | null>(
     null
   );
-  // const [senhasPorServico, setSenhasPorServico] = useState<
-  //   IsenhaProps[] | null
-  // >(null);
+
 
   const [
     quantidadeDeSenhasPendentePorServico,
@@ -75,6 +70,8 @@ export default function CardProximaSenha({
   ] = useState<QuantidadePorServico[]>([]);
 
   const [ultimasChamadas, setUltimasChamadas] = useState<string[]>([]);
+
+  const [showSkeleton, setShowSkeleton] = useState(false)
 
   useEffect(() => {
     const getServicos = async () => {
@@ -137,22 +134,32 @@ export default function CardProximaSenha({
 
   const guicheId = guiche?.id as string;
   const handleNextSenha = async () => {
-    const res = await GetNextSenha({
-      servicoId,
-      userId,
-      reparticaoId,
-      guicheId,
-    });
+    setShowSkeleton(true)
+    try {
+      const res = await GetNextSenha({
+        servicoId,
+        userId,
+        reparticaoId,
+        guicheId,
+      });
 
-    if (!res) {
-      throw new Error("Erro ao tentar chamar próxima senha");
+
+      if (!res) {
+        setShowSkeleton(false)
+        toast.error("Não há novas senhas para este serviço!")
+        return;
+      }
+
+      atualizaTotalSenha();
+      console.log("nome do cidadao: ", res.cidadao.name);
+      setUltimasChamadas((prev) => [...prev, res.cidadao.name]);
+      toast.success("Senha Chamada com Sucesso!")
+      return res;
+    } catch (error) {
+      console.log("Erro na senha do card")
+      console.error(error)
     }
 
-    atualizaTotalSenha();
-    console.log("nome do cidadao: ", res.cidadao.name);
-    setUltimasChamadas((prev) => [...prev, res.cidadao.name]);
-
-    return res;
   };
 
   console.log(
@@ -181,17 +188,20 @@ export default function CardProximaSenha({
         </CardDescription>
       </CardHeader>
       <CardContent className=" ">
-        <Button
+
+        {!showSkeleton ? <Button
           onClick={handleNextSenha}
           className="bg-[#1270b7] hover:bg-blue-700 w-full text-xl p-6"
         >
           Chamar Próxima Senha
-        </Button>
+        </Button> : <Skeleton className="h-[48px] w-[190px] lg:w-full rounded-lg bg-[#1270b7]" />}
+
       </CardContent>
       {/* <CardFooter className="flex justify-between">
         <Button className="bg-[#28945e]">Finalizar</Button>
         <Button variant="destructive">Cancelar</Button>
       </CardFooter> */}
+      <Toaster position="top-center" />
     </Card>
   );
 }

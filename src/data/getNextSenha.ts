@@ -11,15 +11,21 @@ export const GetNextSenha = async ({
   guicheId,
   userId,
 }: dadosProps) => {
-  const res = await fetch(
-    //`http://localhost:3001/senha/chamarProximaSenha/reparticaoId/${reparticaoId}/servicoId/${servicoId}/guicheId/${guicheId}/usuarioId/${userId}`
-    `${process.env.NEXT_PUBLIC_URL}/senha/chamarProximaSenha/reparticaoId/${reparticaoId}/servicoId/${servicoId}/guicheId/${guicheId}/usuarioId/${userId}`
-  );
+  try {
+    const res = await fetch(
+      //`http://localhost:3001/senha/chamarProximaSenha/reparticaoId/${reparticaoId}/servicoId/${servicoId}/guicheId/${guicheId}/usuarioId/${userId}`
+      `${process.env.NEXT_PUBLIC_URL}/senha/chamarProximaSenha/reparticaoId/${reparticaoId}/servicoId/${servicoId}/guicheId/${guicheId}/usuarioId/${userId}`
+    );
 
-  if (!res.ok) {
-    throw new Error("Falha ao chamar próxima senha");
+    if (!res.ok) {
+      const errorData = await res.json();
+      console.error("Erro ao buscar próxima senha", errorData);
+      return null;
+    }
+
+    const data = await res.json();
+    return data;
+  } catch (error) {
+    console.error("Erro na chamada da Api", error);
   }
-
-  const data = res.json();
-  return data;
 };
