@@ -194,7 +194,7 @@ export default function CardProximaSenha({
           className="bg-[#1270b7] hover:bg-blue-700 w-full text-xl p-6"
         >
           Chamar Próxima Senha
-        </Button> : <Skeleton className="h-[48px] w-[190px] lg:w-full rounded-lg bg-[#1270b7]" />}
+        </Button> : <Skeleton className="h-[48px]  lg:w-full rounded-lg bg-[#1270b7]" />}
 
       </CardContent>
       {/* <CardFooter className="flex justify-between">
