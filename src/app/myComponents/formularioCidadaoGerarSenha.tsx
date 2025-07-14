@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
-
+import { withMask } from 'use-mask-input';
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -21,6 +21,7 @@ import { cidadaoProps } from "@/types/typesCidadao";
 
 
 import { toast } from "sonner";
+import { Toaster } from "react-hot-toast";
 
 interface formularioCidadaoGerarSenhaProps {
   reparticaoId: string;
@@ -28,14 +29,20 @@ interface formularioCidadaoGerarSenhaProps {
   onSenhaCriada?: () => void;
 }
 
+const cpfRegexComFormatacao = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/;
+const removerPontosTracosRegex = /[.-]/g;
+
 const formSchema = z.object({
   name: z.string().min(3, {
     message: "O nome deve ter ao menos 3 caracteres",
   }),
 
-  cpf: z.string().min(3, {
-    message: "o cpf deve conter 11 numeors",
-  }),
+  cpf: z
+    .string()
+    .regex(cpfRegexComFormatacao, {
+      message: "CPF inválido (formato esperado: XXX.XXX.XXX-XX)",
+    })
+    .transform((valor) => valor.replace(removerPontosTracosRegex, "")),
 
   prioridade: z.boolean(),
 });
@@ -78,16 +85,17 @@ export function FormularioCidadaoGerarSenha({
       );
       if (!res.ok) {
         throw new Error("Erro ao criar senha!");
+        toast.error("Erro ao criar senha!")
       }
 
       const senhaCriada = await res.json();
-
-      toast("Senha criada com sucesso", {
-        action: {
-          label: "Fechar",
-          onClick: () => console.log("Fechado"),
-        },
-      });
+      toast.success('Senha criada com sucesso!')
+      // toast("Senha criada com sucesso", {
+      //   action: {
+      //     label: "Fechar",
+      //     onClick: () => console.log("Fechado"),
+      //   },
+      // });
 
       console.log("Senha Criada!!!", senhaCriada);
       form.reset();
@@ -128,7 +136,7 @@ export function FormularioCidadaoGerarSenha({
             <FormItem>
               <FormLabel>CPF</FormLabel>
               <FormControl>
-                <Input placeholder="CPF" {...field} />
+                <Input placeholder="CPF" {...field} ref={withMask('999.999.999-99')} />
               </FormControl>
               <FormDescription>Digite os números do cpf</FormDescription>
               <FormMessage />
@@ -160,6 +168,7 @@ export function FormularioCidadaoGerarSenha({
         <Button className="bg-[#1270b7] w-full" type="submit">
           Enviar
         </Button>
+        <Toaster />
       </form>
     </Form>
   );

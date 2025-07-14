@@ -9,6 +9,9 @@ import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { CreateUsuario } from '@/data/createUsuario'
 import { getReparticao } from '@/data/get-reparticao'
+import toast, { Toaster } from 'react-hot-toast'
+import { withMask } from 'use-mask-input';
+import { Skeleton } from "@/components/ui/skeleton"
 
 
 
@@ -20,9 +23,18 @@ interface ReparticaoProps {
 interface PainelProps {
     slug: string;
 }
+
+const cpfRegexComFormatacao = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/;
+const removerPontosTracosRegex = /[.-]/g;
+
 const formSchema = z.object({
     name: z.string().min(3),
-    cpf: z.string().max(14, 'Quantidade de caracteres insuficiente'),
+    cpf: z
+        .string()
+        .regex(cpfRegexComFormatacao, {
+            message: "CPF inválido (formato esperado: XXX.XXX.XXX-XX)",
+        })
+        .transform((valor) => valor.replace(removerPontosTracosRegex, "")),
     password: z.string().min(6, "Senha deve ter no mínimo 6 caracteres")
 })
 
@@ -31,7 +43,7 @@ export default function FormularioCriarUsuario({ slug }: PainelProps) {
 
 
     const [reparticaoId, setReparticaoId] = useState("")
-
+    const [showSkeleton, setShowSkeleton] = useState(false)
 
 
 
@@ -62,11 +74,15 @@ export default function FormularioCriarUsuario({ slug }: PainelProps) {
 
     console.log("REPARTIÇÃO ID: ", reparticaoId)
     async function onSubmit(values: z.infer<typeof formSchema>) {
-
+        setShowSkeleton(true)
         try {
             const data = await CreateUsuario({ name: values.name, cpf: values.cpf, password: values.password, reparticaoId })
+            toast.success("Usuário criado com sucesso")
+            setShowSkeleton(false)
             console.log(data)
         } catch (error) {
+            setShowSkeleton(false)
+            toast.error("Erro ao criar usuário")
             console.error(error)
         }
 
@@ -107,7 +123,7 @@ export default function FormularioCriarUsuario({ slug }: PainelProps) {
                                 <FormItem>
                                     <FormLabel>CPF</FormLabel>
                                     <FormControl>
-                                        <Input placeholder="CPF..." {...field} />
+                                        <Input placeholder="CPF..." {...field} ref={withMask('999.999.999-99')} />
                                     </FormControl>
                                     <FormDescription>
                                         Ex: 000.000.000-00
@@ -133,8 +149,12 @@ export default function FormularioCriarUsuario({ slug }: PainelProps) {
                                 </FormItem>
                             )}
                         />
-                        <Button type="submit" className="w-full py-6 text-xl bg-[#1270b7]">Cadastrar</Button>
+
+                        {!showSkeleton ? <Button type="submit" className="w-full py-6 text-xl bg-[#1270b7] hover:bg-sky-500">Cadastrar</Button> : <Skeleton className="h-[48px] w-[190px] lg:w-full rounded-lg bg-[#1270b7]" />}
+
+
                     </form>
+                    <Toaster />
                 </Form>
 
             </CardContent>

@@ -11,6 +11,7 @@ import { Button } from '@/components/ui/button'
 import { getReparticao } from '@/data/get-reparticao'
 import { CreateLocalDeAtendimento } from '@/data/createLocalDeAtendimento'
 import toast, { Toaster } from 'react-hot-toast';
+import { Skeleton } from '@/components/ui/skeleton'
 
 
 
@@ -33,6 +34,7 @@ export default function FormularioCriarLocalDeAtendimento({ slug }: PainelProps)
 
 
     const [reparticaoId, setReparticaoId] = useState("")
+    const [showSkeleton, setShowSkeleton] = useState(false)
 
 
 
@@ -63,17 +65,23 @@ export default function FormularioCriarLocalDeAtendimento({ slug }: PainelProps)
     console.log("REPARTIÇÃO ID: ", reparticaoId)
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
-
+        setShowSkeleton(true)
         try {
             const data = await CreateLocalDeAtendimento({ name: values.name, reparticaoId })
-            if (data.ok) {
-                toast.success("Usuário cadastrado com sucesso")
+            if (data) {
+                toast.success("Local de atendimento criado com sucesso!")
+                setShowSkeleton(false)
+            } else {
+                toast.error("Erro ao criar local de atendimento!")
+                setShowSkeleton(false)
             }
 
 
         } catch (error) {
+            toast.error("Erro no servidor")
+            setShowSkeleton(false)
             console.error(error)
-            toast.error("Erro ao cadastrar usuário")
+
         }
 
         console.log(values)
@@ -107,7 +115,8 @@ export default function FormularioCriarLocalDeAtendimento({ slug }: PainelProps)
                         />
 
 
-                        <Button type="submit" className="w-full py-6 text-xl bg-[#1270b7]">Cadastrar</Button>
+                        {!showSkeleton ? <Button type="submit" className="w-full py-6 text-xl bg-[#1270b7]">Cadastrar</Button> : <Skeleton className="h-[48px] w-[190px] lg:w-full rounded-lg bg-[#1270b7]" />}
+
                     </form>
                 </Form>
 

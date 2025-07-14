@@ -6,6 +6,7 @@ import { z } from "zod";
 import { setCookie } from "cookies-next";
 // import { cookies } from "next/headers";
 import { Skeleton } from "@/components/ui/skeleton";
+import { withMask } from 'use-mask-input';
 
 import {
   Form,
@@ -29,6 +30,7 @@ import { getLogin } from "@/data/get-login";
 import { useUser } from "@/app/contexts/AuthContext";
 import { redirect } from "next/navigation";
 import { useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
 
 
 interface slugProps {
@@ -65,6 +67,8 @@ export default function FormularioLogin({ slug }: slugProps) {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setShowSkeleton(true);
+
+
     const result = await getLogin(values);
 
     if (result) {
@@ -77,8 +81,12 @@ export default function FormularioLogin({ slug }: slugProps) {
 
       // console.log(result.token);
     } else {
+      toast.error("CPF ou Senha Incorreto!")
       console.error("CPF ou Senha incorretos");
+      setShowSkeleton(false);
     }
+
+
 
     console.log("user: ", user);
   }
@@ -107,7 +115,7 @@ export default function FormularioLogin({ slug }: slugProps) {
                 <FormItem className="text-2xl">
                   <FormLabel className="text-xl">cpf</FormLabel>
                   <FormControl>
-                    <Input placeholder="Digite seu cpf..." {...field} />
+                    <Input placeholder="Digite seu cpf..." {...field} ref={withMask('999.999.999-99')} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -135,6 +143,7 @@ export default function FormularioLogin({ slug }: slugProps) {
               <Skeleton className="w-full bg-[#1270b7] h-[50px]" />
             )}
           </form>
+          <Toaster />
         </Form>
       </CardContent>
     </Card>
