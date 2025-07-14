@@ -15,11 +15,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { Toaster } from "@/components/ui/sonner";
+
 import { FormularioCidadaoGerarSenha } from "./formularioCidadaoGerarSenha";
 import { getAllSenhas } from "@/data/getAllSenhas";
 import { SquareChartGantt } from "lucide-react";
 import Link from "next/link";
+
 
 interface TriagemProps {
   slug: string;
@@ -120,10 +121,10 @@ export default function Triagem({ slug }: TriagemProps) {
               <Card className=" text-center text-xl md:text-2xl w-full py-10 bg-[#1270b7] text-white border-[#1270b7] shadow-xl/60 shadow-[#1270b7] transition delay-150 duration-300 ease-in-out hover:-translate-y-1 hover:scale-105 hover:bg-sky-800 ">
                 <CardHeader>{servico.nome}</CardHeader>
                 <CardContent>
-                  <p className="mb-4 text-base text-white">
+                  {/* <p className="mb-4 text-base text-white">
                     Total: {servico.quantidade}
-                  </p>
-                  <Dialog>
+                  </p> */}
+                  <Dialog >
                     <DialogTrigger asChild>
                       <Button
                         variant="outline"
@@ -147,7 +148,7 @@ export default function Triagem({ slug }: TriagemProps) {
                             onSenhaCriada={() => atualizarQuantidadeDeSenhas()}
                           />
                         </div>
-                        <Toaster />
+
                       </div>
                     </DialogContent>
                   </Dialog>

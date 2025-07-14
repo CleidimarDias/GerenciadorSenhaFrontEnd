@@ -64,6 +64,7 @@ export default async function GuicheDeAtendimento({ params }: slugProps) {
       </div>
 
       <ComponenteEscolhaGuiche reparticaoId={reparticaoId} />
+
     </div>
   );
 }

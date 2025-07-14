@@ -14,14 +14,17 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
+import toast, { Toaster } from 'react-hot-toast';
 import { Input } from "@/components/ui/input";
 import { Switch } from "@/components/ui/switch";
 import { CreateCidadao } from "@/data/createCidadao";
 import { cidadaoProps } from "@/types/typesCidadao";
+import { useState } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 
-import { toast } from "sonner";
-import { Toaster } from "react-hot-toast";
+
+
 
 interface formularioCidadaoGerarSenhaProps {
   reparticaoId: string;
@@ -52,6 +55,10 @@ export function FormularioCidadaoGerarSenha({
   servicoId,
   onSenhaCriada,
 }: formularioCidadaoGerarSenhaProps) {
+
+
+  const [showSkeleton, setShowSkeleton] = useState(false)
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -62,6 +69,7 @@ export function FormularioCidadaoGerarSenha({
   });
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    setShowSkeleton(true)
     try {
       const cidadao: cidadaoProps = await CreateCidadao({
         name: values.name,
@@ -84,25 +92,22 @@ export function FormularioCidadaoGerarSenha({
         }
       );
       if (!res.ok) {
+        setShowSkeleton(false)
         throw new Error("Erro ao criar senha!");
         toast.error("Erro ao criar senha!")
       }
 
       const senhaCriada = await res.json();
       toast.success('Senha criada com sucesso!')
-      // toast("Senha criada com sucesso", {
-      //   action: {
-      //     label: "Fechar",
-      //     onClick: () => console.log("Fechado"),
-      //   },
-      // });
-
+      setShowSkeleton(false)
       console.log("Senha Criada!!!", senhaCriada);
       form.reset();
       if (onSenhaCriada) {
         onSenhaCriada();
       }
     } catch (error) {
+      setShowSkeleton(false)
+      toast.success("Erro no servidor")
       console.error("Erro ao criar cidadão:", error);
     }
   };
@@ -165,9 +170,10 @@ export function FormularioCidadaoGerarSenha({
           )}
         />
 
-        <Button className="bg-[#1270b7] w-full" type="submit">
+        {!showSkeleton ? <Button className="bg-[#1270b7] w-full" type="submit">
           Enviar
-        </Button>
+        </Button> : <Skeleton className="h-[40px]  lg:w-full rounded-lg bg-[#1270b7]" />}
+
         <Toaster />
       </form>
     </Form>

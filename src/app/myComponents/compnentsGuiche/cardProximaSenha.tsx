@@ -70,8 +70,8 @@ export default function CardProximaSenha({
   ] = useState<QuantidadePorServico[]>([]);
 
   const [ultimasChamadas, setUltimasChamadas] = useState<string[]>([]);
+  const [showSkeleton, setShowSkeleton] = useState(false);
 
-  const [showSkeleton, setShowSkeleton] = useState(false)
 
   useEffect(() => {
     const getServicos = async () => {
@@ -153,9 +153,11 @@ export default function CardProximaSenha({
       atualizaTotalSenha();
       console.log("nome do cidadao: ", res.cidadao.name);
       setUltimasChamadas((prev) => [...prev, res.cidadao.name]);
+      setShowSkeleton(false)
       toast.success("Senha Chamada com Sucesso!")
       return res;
     } catch (error) {
+      toast.error("Erro no servidor")
       console.log("Erro na senha do card")
       console.error(error)
     }
@@ -181,17 +183,17 @@ export default function CardProximaSenha({
       <CardHeader className="">
         <CardTitle className="text-center text-xl">{servicoName}</CardTitle>
         <CardDescription>
-          Senhas Pendentes:{" "}
+          {/* Senhas Pendentes:{" "}
           {quantidadeDeSenhasPendentePorServico.map(
             (quantidade) => quantidade.quantidade
-          )}
+          )} */}
         </CardDescription>
       </CardHeader>
       <CardContent className=" ">
 
         {!showSkeleton ? <Button
           onClick={handleNextSenha}
-          className="bg-[#1270b7] hover:bg-blue-700 w-full text-xl p-6"
+          className="bg-[#1270b7] hover:bg-sky-500 w-full text-xl p-6"
         >
           Chamar Próxima Senha
         </Button> : <Skeleton className="h-[48px]  lg:w-full rounded-lg bg-[#1270b7]" />}
