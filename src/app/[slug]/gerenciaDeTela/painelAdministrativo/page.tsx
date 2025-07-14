@@ -22,7 +22,7 @@ export default async function PainelAdminstrativo({ params }: slugProps) {
 
             <div className="flex justify-between md:justify-around p-10  md:text-3xl  font-light   bg-white  border-white mb-6 md:mb-0">
                 <h3 className="text-[#1270b7]">{slug.toUpperCase()}</h3>
-                <h3 className="text-[#1270b7] hidden md:block">Triagem</h3>
+                {/* <h3 className="text-[#1270b7] hidden md:block">Triagem</h3> */}
 
                 <Link
                     href={`/${slug}/gerenciaDeTela`}
