@@ -35,8 +35,11 @@ const formSchema = z.object({
             message: "CPF inválido (formato esperado: XXX.XXX.XXX-XX)",
         })
         .transform((valor) => valor.replace(removerPontosTracosRegex, "")),
-    password: z.string().min(6, "Senha deve ter no mínimo 6 caracteres")
-})
+    password: z.string().min(6, "Senha deve ter no mínimo 6 caracteres"),
+    passwordConfirmation: z.string().min(1, "O Campo confirmação de senha deve ser preenchido")
+}).refine((data) => {
+    return data.password === data.passwordConfirmation
+}, { message: "As senhas devem coincidir", path: ['passwordConfirmation'] })
 
 
 export default function FormularioCriarUsuario({ slug }: PainelProps) {
@@ -52,7 +55,8 @@ export default function FormularioCriarUsuario({ slug }: PainelProps) {
         defaultValues: {
             name: "",
             cpf: "",
-            password: ""
+            password: "",
+            passwordConfirmation: ""
         },
     })
 
@@ -97,58 +101,82 @@ export default function FormularioCriarUsuario({ slug }: PainelProps) {
             </CardHeader>
             <CardContent>
 
+
                 <Form {...form}>
                     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 ">
-                        <FormField
-                            control={form.control}
-                            name="name"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Nome</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="Nome..." {...field} />
-                                    </FormControl>
-                                    <FormDescription>
-                                        Nome Completo
-                                    </FormDescription>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
+                        <div className="flex flex-col lg:flex-row gap-4">
+                            <FormField
+                                control={form.control}
+                                name="name"
+                                render={({ field }) => (
+                                    <FormItem className="flex-1">
+                                        <FormLabel>Nome</FormLabel>
+                                        <FormControl>
+                                            <Input placeholder="Nome..." {...field} />
+                                        </FormControl>
+                                        <FormDescription>
+                                            Nome Completo
+                                        </FormDescription>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
 
-                        <FormField
-                            control={form.control}
-                            name="cpf"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>CPF</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="CPF..." {...field} ref={withMask('999.999.999-99')} />
-                                    </FormControl>
-                                    <FormDescription>
-                                        Ex: 000.000.000-00
-                                    </FormDescription>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
+                            <FormField
+                                control={form.control}
+                                name="cpf"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>CPF</FormLabel>
+                                        <FormControl>
+                                            <Input placeholder="CPF..." {...field} ref={withMask('999.999.999-99')} />
+                                        </FormControl>
+                                        <FormDescription>
+                                            Ex: 000.000.000-00
+                                        </FormDescription>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
 
-                        <FormField
-                            control={form.control}
-                            name="password"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Senha</FormLabel>
-                                    <FormControl>
-                                        <Input placeholder="Senha..." {...field} />
-                                    </FormControl>
-                                    <FormDescription>
-                                        Senha deve conter no mínimo 6 caracteres.
-                                    </FormDescription>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
+                        </div>
+
+                        <div className="flex flex-col lg:flex-row gap-4">
+                            <FormField
+                                control={form.control}
+                                name="password"
+                                render={({ field }) => (
+                                    <FormItem className="w-full">
+                                        <FormLabel>Senha</FormLabel>
+                                        <FormControl>
+                                            <Input placeholder="Senha..." {...field} />
+                                        </FormControl>
+                                        <FormDescription>
+                                            Senha deve conter no mínimo 6 caracteres.
+                                        </FormDescription>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+
+                            <FormField
+                                control={form.control}
+                                name="passwordConfirmation"
+                                render={({ field }) => (
+                                    <FormItem className='w-full'>
+                                        <FormLabel>Confirmar Senha</FormLabel>
+                                        <FormControl>
+                                            <Input placeholder="Confirmar senha..." {...field} />
+                                        </FormControl>
+                                        <FormDescription>
+                                            Repita sua senha
+                                        </FormDescription>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
+                        </div>
+
 
                         {!showSkeleton ? <Button type="submit" className="w-full py-6 text-xl bg-[#1270b7] hover:bg-sky-500">Cadastrar</Button> : <Skeleton className="h-[48px] w-[190px] lg:w-full rounded-lg bg-[#1270b7]" />}
 
@@ -159,5 +187,75 @@ export default function FormularioCriarUsuario({ slug }: PainelProps) {
 
             </CardContent>
         </Card>
+
+        // <Card className="w-60 lg:w-150 h-fit  rounded-none flex flex-col gap-5 ">
+        //     <CardHeader>
+        //         <CardTitle className="text-xl lg:text-2xl">Cadastrar Usuário</CardTitle>
+        //         <CardDescription>Digite os dados do usuário.</CardDescription>
+        //     </CardHeader>
+        //     <CardContent>
+
+        //         <Form {...form}>
+        //             <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 ">
+        //                 <FormField
+        //                     control={form.control}
+        //                     name="name"
+        //                     render={({ field }) => (
+        //                         <FormItem>
+        //                             <FormLabel>Nome</FormLabel>
+        //                             <FormControl>
+        //                                 <Input placeholder="Nome..." {...field} />
+        //                             </FormControl>
+        //                             <FormDescription>
+        //                                 Nome Completo
+        //                             </FormDescription>
+        //                             <FormMessage />
+        //                         </FormItem>
+        //                     )}
+        //                 />
+
+        //                 <FormField
+        //                     control={form.control}
+        //                     name="cpf"
+        //                     render={({ field }) => (
+        //                         <FormItem>
+        //                             <FormLabel>CPF</FormLabel>
+        //                             <FormControl>
+        //                                 <Input placeholder="CPF..." {...field} ref={withMask('999.999.999-99')} />
+        //                             </FormControl>
+        //                             <FormDescription>
+        //                                 Ex: 000.000.000-00
+        //                             </FormDescription>
+        //                             <FormMessage />
+        //                         </FormItem>
+        //                     )}
+        //                 />
+
+        //                 <FormField
+        //                     control={form.control}
+        //                     name="password"
+        //                     render={({ field }) => (
+        //                         <FormItem>
+        //                             <FormLabel>Senha</FormLabel>
+        //                             <FormControl>
+        //                                 <Input placeholder="Senha..." {...field} />
+        //                             </FormControl>
+        //                             <FormDescription>
+        //                                 Senha deve conter no mínimo 6 caracteres.
+        //                             </FormDescription>
+        //                             <FormMessage />
+        //                         </FormItem>
+        //                     )}
+        //                 />
+
+        //                 {!showSkeleton ? <Button type="submit" className="w-full py-6 text-xl bg-[#1270b7] hover:bg-sky-500">Cadastrar</Button> : <Skeleton className="h-[48px] w-[190px] lg:w-full rounded-lg bg-[#1270b7]" />}
+
+
+        //             </form>
+        //             <Toaster />
+        //         </Form>
+
+        //     </CardContent>
+        // </Card>
     )
 }
