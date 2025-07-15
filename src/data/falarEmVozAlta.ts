@@ -1,9 +1,10 @@
-export function falarEmVozAlta(texto: string) {
-  const synth = window.speechSynthesis;
-  const utterance = new SpeechSynthesisUtterance(texto);
-  utterance.lang = "pt-BR";
-  utterance.rate = 1;
-  utterance.pitch = 1;
+export async function falarEmVozAlta(texto: string): Promise<void> {
+  return new Promise((resolve) => {
+    const utterance = new SpeechSynthesisUtterance(texto);
+    utterance.lang = "pt-BR";
+    utterance.onend = () => resolve();
+    utterance.onerror = () => resolve(); // em caso de erro, continua
 
-  synth.speak(utterance);
+    window.speechSynthesis.speak(utterance);
+  });
 }
